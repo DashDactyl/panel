@@ -34,9 +34,9 @@ jobs:
           REF: ${{ github.ref }}
         run: |
           echo "Full REF: ${REF}"
-          REF_PART=${REF:10}
+          REF_PART=${REF:11} # mengambil substring dari indeks ke-11 untuk menghindari "/"
           echo "Extracted REF_PART: ${REF_PART}"
-          if [ -z "$REF_PART" ] || [ "${REF_PART}" = "/" ]; then
+          if [ -z "$REF_PART" ]; then
             echo "Error: REF_PART is invalid"
             exit 1
           fi
@@ -60,7 +60,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          sed -n "/^## ${REF:10}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
+          sed -n "/^## ${REF:11}/,/^## /{/^## /b;p}" CHANGELOG.md > ./RELEASE_CHANGELOG
 
       - name: Create checksum and add to changelog
         run: |
