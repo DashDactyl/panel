@@ -33,7 +33,12 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          BRANCH=release/${REF:10}
+          REF_PART=${REF:10}
+          if [ -z "$REF_PART" ]; then
+            echo "Error: REF_PART is empty"
+            exit 1
+          fi
+          BRANCH=release/$REF_PART
           git config --local user.email "nubledstudioetc@gmail.com"
           git config --local user.name "DashDactyl"
           git checkout -b $BRANCH
@@ -85,7 +90,7 @@ jobs:
         id: upload-release-checksum
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./checksum.txt
