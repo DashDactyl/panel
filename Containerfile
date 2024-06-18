@@ -47,7 +47,7 @@ RUN         microdnf update -y \
                 && microdnf remove -y tar wget \
                 && microdnf clean all
 
-COPY        --chown=caddy:caddy --from=builder /var/www/pterodactyl /var/www/pterodactyl
+COPY        --chown=caddy:caddy --from=builder /var/www/dashdactyl /var/www/dashdactyl
 
 WORKDIR     /var/www/dashdactyl
 
