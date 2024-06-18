@@ -34,8 +34,8 @@ jobs:
           REF: ${{ github.ref }}
         run: |
           REF_PART=${REF:10}
-          if [ -z "$REF_PART" ]; then
-            echo "Error: REF_PART is empty"
+          if [ -z "$REF_PART" ] || [ "${REF_PART}" = "/" ]; then
+            echo "Error: REF_PART is invalid"
             exit 1
           fi
           BRANCH=release/$REF_PART
