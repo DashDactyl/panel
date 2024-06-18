@@ -33,12 +33,15 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
+          echo "Full REF: ${REF}"
           REF_PART=${REF:10}
+          echo "Extracted REF_PART: ${REF_PART}"
           if [ -z "$REF_PART" ] || [ "${REF_PART}" = "/" ]; then
             echo "Error: REF_PART is invalid"
             exit 1
           fi
           BRANCH=release/$REF_PART
+          echo "Branch name to create: $BRANCH"
           git config --local user.email "nubledstudioetc@gmail.com"
           git config --local user.name "DashDactyl"
           git checkout -b $BRANCH
@@ -61,7 +64,7 @@ jobs:
 
       - name: Create checksum and add to changelog
         run: |
-          SUM=`sha256sum panel.tar.gz`
+          SUM=$(sha256sum panel.tar.gz)
           echo -e "\n#### SHA256 Checksum\n\n\`\`\`\n$SUM\n\`\`\`\n" >> ./RELEASE_CHANGELOG
           echo $SUM > checksum.txt
 
