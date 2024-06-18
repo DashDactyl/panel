@@ -4,7 +4,7 @@ FROM        --platform=$TARGETOS/$TARGETARCH registry.access.redhat.com/ubi9/nod
 USER        0
 RUN         npm install -g pnpm
 
-WORKDIR     /var/www/pterodactyl
+WORKDIR     /var/www/dashdactyl
 
 COPY        --chown=1001:0 public ./public
 COPY        --chown=1001:0 resources/scripts ./resources/scripts
@@ -49,16 +49,16 @@ RUN         microdnf update -y \
 
 COPY        --chown=caddy:caddy --from=builder /var/www/pterodactyl /var/www/pterodactyl
 
-WORKDIR     /var/www/pterodactyl
+WORKDIR     /var/www/dashdactyl
 
-RUN         mkdir -p /tmp/pterodactyl/cache /tmp/pterodactyl/framework/{cache,sessions,views} storage/framework \
+RUN         mkdir -p /tmp/dashdactyl/cache /tmp/dashdactyl/framework/{cache,sessions,views} storage/framework \
                 && rm -rf bootstrap/cache storage/framework/sessions storage/framework/views storage/framework/cache \
-                && ln -s /tmp/pterodactyl/cache /var/www/pterodactyl/bootstrap/cache \
-                && ln -s /tmp/pterodactyl/framework/cache /var/www/pterodactyl/storage/framework/cache \
-                && ln -s /tmp/pterodactyl/framework/sessions /var/www/pterodactyl/storage/framework/sessions \
-                && ln -s /tmp/pterodactyl/framework/views /var/www/pterodactyl/storage/framework/views \
-                && chmod -R 755 /var/www/pterodactyl/storage/* /tmp/pterodactyl/cache \
-                && chown -R caddy:caddy /var/www/pterodactyl /tmp/pterodactyl/{cache,framework}
+                && ln -s /tmp/dashdactyl/cache /var/www/dashdactyl/bootstrap/cache \
+                && ln -s /tmp/dashdactyl/framework/cache /var/www/dashdactyl/storage/framework/cache \
+                && ln -s /tmp/dashdactyl/framework/sessions /var/www/dashdactyl/storage/framework/sessions \
+                && ln -s /tmp/dashdactyl/framework/views /var/www/dashdactyl/storage/framework/views \
+                && chmod -R 755 /var/www/dashdactyl/storage/* /tmp/dashdactyl/cache \
+                && chown -R caddy:caddy /var/www/dashdactyl /tmp/dashdactyl/{cache,framework}
 
 USER        caddy
 ENV         USER=caddy
