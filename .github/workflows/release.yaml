@@ -32,9 +32,10 @@ jobs:
       - name: Create release branch and bump version
         env:
           REF: ${{ github.ref }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
         run: |
           echo "Full REF: ${REF}"
-          REF_PART=${REF:11} # mengambil substring dari indeks ke-11 untuk menghindari "/"
+          REF_PART=${REF:11} # Menghindari "/" di awal
           echo "Extracted REF_PART: ${REF_PART}"
           if [ -z "$REF_PART" ]; then
             echo "Error: REF_PART is invalid"
@@ -45,6 +46,7 @@ jobs:
           git config --local user.email "nubledstudioetc@gmail.com"
           git config --local user.name "DashDactyl"
           git checkout -b $BRANCH
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           git push -u origin $BRANCH
           sed -i "s/    'version' => 'canary',/    'version' => '${REF:11}',/" config/app.php
           git add config/app.php
