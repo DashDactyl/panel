@@ -92,7 +92,7 @@ return [
 
     'cdn' => [
         'cache_time' => 60,
-        'url' => 'https://cdn.DASHDACTYL.io/releases/latest.json',
+        'url' => 'https://cdn.pterodactyl.io/releases/latest.json',
     ],
 
     /*
